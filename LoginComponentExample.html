@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-
+strict.dtd">
+<!-- Copyright (c) 2011 Rally Software Development Corp. All rights reserved -->
+<html>
+<head>
+<title>Login Component Example</title>
+<meta name="Name" content="App Example: LoginKey RallyDataSource" />
+<meta name="Version" content="2011.04" />
+<meta name="Vendor" content="Rally Software" />
+<script type="text/javascript" src="https://rally1.rallydev.com/apps/1.25/sdk.js?loginKey=ENCODED STRING GOES HERE"></script>
+<script type="text/javascript">
+function onLoad() {
+var rallyDataSource = new rally.sdk.data.RallyDataSource('__WORKSPACE_OID__',
+'__PROJECT_OID__', '__PROJECT_SCOPING_UP__', '__PROJECT_SCOPING_DOWN__');
+var config = {type: "hierarchicalrequirement", columnKeys:["FormattedID", "Name"]};
+var table = new rally.sdk.ui.Table(config, rallyDataSource);
+table.display("tableDiv");
+}
+rally.addOnLoad(onLoad);
+</script>
+</head>
+<body>
+<div id="tableDiv" style="float:left;width:400px"></div>
+</body>
+</html>
