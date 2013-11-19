@@ -1,15 +1,25 @@
 #### LoginKey
 
-The App SDK LoginKey is a feature that allows customers to create an app that runs external to the Rally product—hosted in an intranet portal such as Confluence or SharePoint, or on a user's desktop—without being prompted to enter login credentials. It is especially useful to create dashboards and information radiators for stakeholders that do not have Rally credentials or experience using the Rally product.
+##### Overview
 
-The LoginKey essentially provides a way to embed encrypted Rally credentials for a read-only user into the script tag used to reference the App SDK. Because it is possible for a savvy JavaScript programmer to decrypt the string and discover the credentials, we require customers wishing to use the LoginKey feature to read and accept the following disclaimer before using the LoginKey feature.
+The App SDK LoginKey is a feature that allows customers to create an app
+that runs external to the Rally product—hosted in an intranet portal such as Confluence
+or SharePoint, or on a user's desktop—without being prompted to enter login credentials.
+It is especially useful to create dashboards and information radiators for stakeholders
+that do not have Rally credentials or experience using the Rally product.
+
+The LoginKey essentially provides a way to embed encrypted Rally credentials
+for a read-only user into the script tag used to reference the App SDK.
+Because it is possible for a savvy JavaScript programmer to decrypt the string and
+discover the credentials, we require customers wishing to use the LoginKey feature
+to read and accept the following disclaimer before using the LoginKey feature.
 
 ##### Disclaimer and Limitations
 
 1. The Rally LoginKey feature enables customers to view Rally apps
  and reports without the need to present user credentials (manually).
  Customers can use the LoginKey feature to show Rally content within
- systems like Sharepoint, Confluence, wikis, portals, etc. 
+ systems like Sharepoint, Confluence, Wiki's, portals, etc. 
  
 2. The LoginKey feature accesses Rally via the encoded (not encrypted)
  username and password of a "read-only" Rally user.
@@ -22,26 +32,33 @@ The LoginKey essentially provides a way to embed encrypted Rally credentials for
  We strongly recommend only using this feature for displaying information
  on internal systems that already requires authentication. 
 
-3. Warning: For the purpose of the LoginKey user, a workspace administrator account
- which has been demoted to a read-only account will not work as it is still considered
- a NON-read-only account by the LoginKey. 
-
-4. If you understand and agree to the security concerns above, please continue reading. 
-
-The following section describes the steps needed to generate and
-use an encoded login key with Rally's [App SDK](https://prod.help.rallydev.com/app-sdk) LoginKey functionality.
-This will provide viewer-level functionality for apps into which this code is incorporated. 
+3. Warnings:
+     * For the purpose of the LoginKey user, a Rally workspace administrator account
+       which has been demoted to a read-only account will not work as it is still considered
+       a NON-read-only account by the LoginKey.
+     * The loginKey feature was last available in App SDK version 1.33
 
 
 #### Using the App SDK LoginKey Feature
 
+This section describes the steps needed to generate and use an encoded login key with
+Rally's [App SDK](https://prod.help.rallydev.com/app-sdk) LoginKey functionality.
+This will provide viewer-level functionality for apps into which this code is incorporated.
+
 ##### Running an App outside of Rally
 
-This document explains how to create an app that runs outside of Rally (in an Intranet portal, or on your desktop,
-for example) without requiring the user to enter Rally credentials. The credentials are
-encoded using the [Encoder Page](https://rally1.rallydev.com/apps/html/EncoderPage.html) and supplied to the app using the “loginKey=” parameter on the script tag used to include the App SDK.
+This document explains how to create an app that runs outside of Rally (in an Intranet portal,
+or on your desktop, for example) without requiring the user to enter Rally credentials.
+The credentials are encoded using the
+[Encoder Page](https://rally1.rallydev.com/apps/html/EncoderPage.html)
+and supplied to the app using the “loginKey=” parameter on the script tag used to include the App SDK.
 
-Since the encoded credentials could be reverse engineered by a savvy JavaScript programmer, we require the encoded username and password to refer to a read-only user, i.e. one that only has Viewer permissions for all project to which that user has access. This restriction to read-only users is enforced by both the [Encoder Page](https://rally1.rallydev.com/apps/html/EncoderPage.html) and the App SDK at the time your app is initialized.
+Since the encoded credentials could be reverse engineered by a savvy JavaScript programmer,
+we require the encoded username and password to refer to a read-only Rally user,
+i.e. one that only has Viewer permissions for all project to which that user has access.
+This restriction to read-only users is enforced by both the
+[Encoder Page](https://rally1.rallydev.com/apps/html/EncoderPage.html)
+and the App SDK at the time your app is initialized.
 
 To get the example working, follow these steps:
 
@@ -49,7 +66,6 @@ To get the example working, follow these steps:
 
  ````html
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<!-- Copyright (c) 2011 Rally Software Development Corp. All rights reserved -->
 <html>
 <head>
     <title>Login Component Example</title>
@@ -61,16 +77,16 @@ To get the example working, follow these steps:
     </script>
     <script type="text/javascript">
         function onLoad() {
-        var rallyDataSource = new rally.sdk.data.RallyDataSource(
+            var rallyDataSource = new rally.sdk.data.RallyDataSource(
                 '__WORKSPACE_OID__',
                 '__PROJECT_OID__',
                 '__PROJECT_SCOPING_UP__',
                 '__PROJECT_SCOPING_DOWN__');
-        var config = {type: "hierarchicalrequirement", columnKeys:["FormattedID", "Name"]};
-        var table = new rally.sdk.ui.Table(config, rallyDataSource);
-        table.display("tableDiv");
-    }
-    rally.addOnLoad(onLoad);
+            var config = {type: "hierarchicalrequirement", columnKeys:["FormattedID", "Name"]};
+            var table = new rally.sdk.ui.Table(config, rallyDataSource);
+            table.display("tableDiv");
+        }
+        rally.addOnLoad(onLoad);
     </script>
 </head>
 <body>
@@ -85,14 +101,15 @@ To get the example working, follow these steps:
  &lt;meta name="Version" content="your version here">  
  &lt;meta name="Vendor" content="your company name here">  
 
- Replace <b>'__WORKSPACE_OID'</b> and <b>'__PROJECT_OID__'</b>
+3. If you do not want your app to use the default workspace and project of the "LoginKey user",
+ then replace string <b>'__WORKSPACE_OID'</b> and <b>'__PROJECT_OID__'</b>
  with specific workspace and project object IDs (OIDs) if you wish;
  otherwise the default workspace/project for the "LoginKey user" are used.
 
- Replace <b>'__PROJECT_SCOPING_UP__'</b> and <b>'__PROJECT_SCOPING_DOWN__'</b>
+4. You may also replace <b>'__PROJECT_SCOPING_UP__'</b> and <b>'__PROJECT_SCOPING_DOWN__'</b>
  with 'true' or 'false' to override the defaults (false and true, respectively).
 
-3. To generate the encoded string, point your browser to the
+5. To generate the encoded string, point your browser to the
  [Encoder Page](https://rally1.rallydev.com/apps/html/EncoderPage.html).
 
  A Rally login dialog box will display when you access the
@@ -109,7 +126,7 @@ To get the example working, follow these steps:
  Click the key string to select it, and
  use your browser's copy function (e.g. Control-C) to copy it to the clipboard.
 
-4. Paste the encoded string as the value for the loginKey parameter in the sdk.js
+6. Paste the encoded string as the value for the loginKey parameter in the sdk.js
  script tag in the example code below, replacing "ENCODED STRING GOES HERE".
  The resulting script tag will look similar to the following.
  (Note: Line breaks may appear in the following text,
@@ -119,7 +136,7 @@ To get the example working, follow these steps:
 <script type="text/javascript" src="/apps/1.25/sdk.js?debug=true&loginKey=acda07bd5e53c99ae953f5374cf6e9c4cd996a7ad133a5c2c8cc406caf1d9beb|f9f08a4699e83a27ecfbc462c3b51314|e5217f5acc26020b9a45f0009f0b028757b3a2ecfd7a72ed7a6ab5fb2f47df0ab64024ef268bd302a4117e0f93ed9bfb|71,50,65,97,121,3,17,51,117,7,150,38,80,97,148,71"></script>
 ````
 
-5. NOTE: The encoder page requires a "viewer-only" user to generate the encoded key string.
+7. NOTE: The encoder page requires a "viewer-only" user to generate the encoded key string.
  The key is visible to anyone using the browser in which the external app is displayed
  using the brower’s View Page Source feature. This means that a malicious user could
  determine the readonly user and password to your Rally subscription by inspecting the code.
@@ -147,23 +164,23 @@ in a Confluence page without requiring Confluence users to enter Rally credentia
 2.  Copy and paste the following example code (app) into the file:
 
  ````html
-<title>Login Component Example</title>
-<meta name="Name" content="App Example: Confluence Standard Report" />
-<meta name="Version" content="2011.04" />
-<meta name="Vendor" content="Rally Software" />
-<script type="text/javascript"
-        src="https://rally1.rallydev.com/apps/1.25/sdk.js?loginKey=ENCODED STRING GOES HERE">
-</script>
-<script type="text/javascript">
-      function onLoad() {
-          rally.sdk.ui.AppHeader.destroy();
-          var reportConfig = {report: rally.sdk.ui.StandardReport.IterationBurndown, width : 400, height: 300};
-          var report = new rally.sdk.ui.StandardReport(reportConfig);
-          report.display("reportDiv");
-      }
-      rally.addOnLoad(onLoad);
-</script>
-<div id="reportDiv" style="float:left; width: 400px; margin-left:20px"></div>
+    <title>Login Component Example</title>
+    <meta name="Name" content="App Example: Confluence Standard Report" />
+    <meta name="Version" content="2011.04" />
+    <meta name="Vendor" content="Rally Software" />
+    <script type="text/javascript"
+            src="https://rally1.rallydev.com/apps/1.25/sdk.js?loginKey=ENCODED STRING GOES HERE">
+    </script>
+    <script type="text/javascript">
+        function onLoad() {
+            rally.sdk.ui.AppHeader.destroy();
+            var reportConfig = {report: rally.sdk.ui.StandardReport.IterationBurndown, width : 400, height: 300};
+            var report = new rally.sdk.ui.StandardReport(reportConfig);
+            report.display("reportDiv");
+        }
+        rally.addOnLoad(onLoad);
+    </script>
+    <div id="reportDiv" style="float:left; width: 400px; margin-left:20px"></div>
 ````
 
 3. Replace "ENCODED STRING GOES HERE" text with the encrypted login key produced by the
@@ -200,22 +217,22 @@ Web Part without requiring SharePoint users to enter Rally credentials.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-<title>Login Component Example</title>
-<meta name="Name" content="App Example: SharePoint Standard Report" />
-<meta name="Version" content="2011.04" />
-<meta name="Vendor" content="Rally Software" />
-<script type="text/javascript"
-        src="https://rally1.rallydev.com/apps/1.25/sdk.js?loginKey=ENCODED STRING GOES HERE">
-</script>
-<script type="text/javascript">
-    function onLoad() {
-        rally.sdk.ui.AppHeader.destroy();
-        var reportConfig = {report: rally.sdk.ui.StandardReport.IterationBurndown, width : 400, height: 300};
-        var report = new rally.sdk.ui.StandardReport(reportConfig);
-        report.display("reportDiv");
-    }
-    rally.addOnLoad(onLoad);
-</script>
+    <title>Login Component Example</title>
+    <meta name="Name" content="App Example: SharePoint Standard Report" />
+    <meta name="Version" content="2011.04" />
+    <meta name="Vendor" content="Rally Software" />
+    <script type="text/javascript"
+            src="https://rally1.rallydev.com/apps/1.25/sdk.js?loginKey=ENCODED STRING GOES HERE">
+    </script>
+    <script type="text/javascript">
+        function onLoad() {
+            rally.sdk.ui.AppHeader.destroy();
+            var reportConfig = {report: rally.sdk.ui.StandardReport.IterationBurndown, width : 400, height: 300};
+            var report = new rally.sdk.ui.StandardReport(reportConfig);
+            report.display("reportDiv");
+        }
+        rally.addOnLoad(onLoad);
+    </script>
 </head>
 <body>
     <div id="reportDiv" style="float:left; width: 400px; margin-left:20px"></div>
@@ -262,13 +279,13 @@ Example Code:
 </script>
 <script type="text/javascript">
     function onLoad() {
-    rally.sdk.ui.AppHeader.destroy();
-    var reportConfig1 = {report: rally.sdk.ui.StandardReport.IterationDefectsbyState,  width : 400, height: 300};
-    var report1 = new rally.sdk.ui.StandardReport(reportConfig1);
-    report1.display("reportDiv1");
-    var reportConfig2 = {report: rally.sdk.ui.StandardReport.IterationDefectsbyPriority, width : 400,  height: 300};
-    var report2 = new rally.sdk.ui.StandardReport(reportConfig2);
-    report2.display("reportDiv2");
+        rally.sdk.ui.AppHeader.destroy();
+        var reportConfig1 = {report: rally.sdk.ui.StandardReport.IterationDefectsbyState,  width : 400, height: 300};
+        var report1 = new rally.sdk.ui.StandardReport(reportConfig1);
+        report1.display("reportDiv1");
+        var reportConfig2 = {report: rally.sdk.ui.StandardReport.IterationDefectsbyPriority, width : 400,  height: 300};
+        var report2 = new rally.sdk.ui.StandardReport(reportConfig2);
+        report2.display("reportDiv2");
     }
     rally.addOnLoad(onLoad);
 </script>
