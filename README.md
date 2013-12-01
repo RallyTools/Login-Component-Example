@@ -53,7 +53,7 @@ var rallyDataSource = new rally.sdk.data.RallyDataSource(
                     '__PROJECT_OID__',
                     '__PROJECT_SCOPING_UP__',
                     '__PROJECT_SCOPING_DOWN__');
-                rallyDataSource.setApiVersion("1.43");
+                    rallyDataSource.setApiVersion("1.43");
  ````
 
 #### Using the App SDK LoginKey Feature
