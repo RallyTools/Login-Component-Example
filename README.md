@@ -46,13 +46,15 @@ to read and accept the following disclaimer before using the LoginKey feature.
      * Set the API Version in the script include for the sdk.js:
 `<script type="text/javascript" src="/apps/1.33/sdk.js?apiVersion=1.43"></script>`
      * Set the API Version on the rallyDataSource object in your Javascript code:
-````javascript  var rallyDataSource = new rally.sdk.data.RallyDataSource(
+
+ ````javascript
+var rallyDataSource = new rally.sdk.data.RallyDataSource(
                     '__WORKSPACE_OID__',
                     '__PROJECT_OID__',
                     '__PROJECT_SCOPING_UP__',
                     '__PROJECT_SCOPING_DOWN__');
                 rallyDataSource.setApiVersion("1.43");
-````
+ ````
 
 #### Using the App SDK LoginKey Feature
 
