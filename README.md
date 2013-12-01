@@ -55,6 +55,7 @@ var rallyDataSource = new rally.sdk.data.RallyDataSource(
                     '__PROJECT_SCOPING_DOWN__');
                     rallyDataSource.setApiVersion("1.43");
  ````
+     * Caution is recommended when adjusting the WSAPI version for AppSDK Rally Catalog Apps - some Catalog Apps are not compatible with newer versions of WSAPI.
 
 #### Using the App SDK LoginKey Feature
 
