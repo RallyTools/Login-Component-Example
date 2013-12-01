@@ -19,25 +19,39 @@ to read and accept the following disclaimer before using the LoginKey feature.
 1. The Rally LoginKey feature enables customers to view Rally apps
  and reports without the need to present user credentials (manually).
  Customers can use the LoginKey feature to show Rally content within
- systems like Sharepoint, Confluence, Wiki's, portals, etc. 
- 
+ systems like Sharepoint, Confluence, Wiki's, portals, etc.
+
 2. The LoginKey feature accesses Rally via the encoded (not encrypted)
  username and password of a "read-only" Rally user.
  The encoded username and password are stored in a Javascript file that is delivered to the browser.
 
  This means that a malicious user could determine the read-only username and password
  to your Rally subscription by inspecting the code and thus login to your subscription
- (into the read-only account). 
+ (into the read-only account).
 
  We strongly recommend only using this feature for displaying information
- on internal systems that already requires authentication. 
+ on internal systems that already requires authentication.
 
 3. Warnings:
      * For the purpose of the LoginKey user, a Rally workspace administrator account
        which has been demoted to a read-only account will not work as it is still considered
        a NON-read-only account by the LoginKey.
-     * The loginKey feature was last available in App SDK version 1.33
+     * The most current version of AppSDK for which the LoginKey feature is version 1.33
 
+4. Tip:
+     * AppSDK 1.33 can be utilized concurrently with Rally Webservices API (WSAPI) versions
+       up to and including WSAPI 1.43.
+     * To utilize a higher version of WSAPI with AppSDK 1.33 one of the following two
+       procedures may be followed:
+     * Set the API Version in the script include for the sdk.js:
+`<script type="text/javascript" src="/apps/1.33/sdk.js?apiVersion=1.43"></script>`
+     * Set the API Version on the rallyDataSource object in your Javascript code:
+`            var rallyDataSource = new rally.sdk.data.RallyDataSource(
+                '__WORKSPACE_OID__',
+                '__PROJECT_OID__',
+                '__PROJECT_SCOPING_UP__',
+                '__PROJECT_SCOPING_DOWN__');
+            rallyDataSource.setApiVersion("1.43");`
 
 #### Using the App SDK LoginKey Feature
 
@@ -97,9 +111,9 @@ To get the example working, follow these steps:
 
 2. Modify the meta tags to reflect your own name, version, and vendor (your company name) for your example app.
 
- &lt;meta name="Name" content="App: your app name here">  
- &lt;meta name="Version" content="your version here">  
- &lt;meta name="Vendor" content="your company name here">  
+ &lt;meta name="Name" content="App: your app name here">
+ &lt;meta name="Version" content="your version here">
+ &lt;meta name="Vendor" content="your company name here">
 
 3. If you do not want your app to use the default workspace and project of the "LoginKey user",
  then replace string <b>'__WORKSPACE_OID'</b> and <b>'__PROJECT_OID__'</b>
@@ -204,7 +218,7 @@ Notes:
  * In general, you should be able to convert any app to run in Confluence by removing
  &lt;html>, &lt;head>, and &lt;body> tags (and the corresponding closing tags),
  and adding the {html} macro as the first and last lines.
- 
+
 
 ##### SharePoint access to Standard Reports
 
