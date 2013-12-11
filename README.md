@@ -1,6 +1,6 @@
-#### LoginKey
+##### LoginKey
 
-##### Overview
+###### Overview
 
 The App SDK LoginKey is a feature that allows customers to create an app
 that runs external to the Rally product—hosted in an intranet portal such as Confluence
@@ -14,7 +14,7 @@ Because it is possible for a savvy JavaScript programmer to decrypt the string a
 discover the credentials, we require customers wishing to use the LoginKey feature
 to read and accept the following disclaimer before using the LoginKey feature.
 
-##### Disclaimer and Limitations
+###### Disclaimer and Limitations
 
 1. The Rally LoginKey feature enables customers to view Rally apps
  and reports without the need to present user credentials (manually).
@@ -57,13 +57,13 @@ var rallyDataSource = new rally.sdk.data.RallyDataSource(
  ````
      * Caution is recommended when adjusting the WSAPI version for AppSDK Rally Catalog Apps - some Catalog Apps are not compatible with newer versions of WSAPI.
 
-#### Using the App SDK LoginKey Feature
+##### Using the App SDK LoginKey Feature
 
 This section describes the steps needed to generate and use an encoded login key with
 Rally's [App SDK](https://prod.help.rallydev.com/app-sdk) LoginKey functionality.
 This will provide viewer-level functionality for apps into which this code is incorporated.
 
-##### Running an App outside of Rally
+###### Running an App outside of Rally
 
 This document explains how to create an app that runs outside of Rally (in an Intranet portal,
 or on your desktop, for example) without requiring the user to enter Rally credentials.
@@ -162,13 +162,13 @@ To get the example working, follow these steps:
  (which contains the key) with anyone you don’t trust.</b>
 
 
-##### Running a Shared App outside of Rally
+###### Running a Shared App outside of Rally
 
 Similar to the steps above, you can also display shared Rally apps.
 This means the App must be "shared" to run outside of Rally.
 An unshared app will result in a 404 Page Not Found error.
 
-##### Confluence access to Standard Reports
+###### Confluence access to Standard Reports
 
 This example shows how to display Rally
 [Standard Reports](http://prod.help.rallydev.com/help/standard-reports)
@@ -224,7 +224,7 @@ Notes:
  and adding the {html} macro as the first and last lines.
 
 
-##### SharePoint access to Standard Reports
+###### SharePoint access to Standard Reports
 
 This example shows how to display a Rally Standard Report in a SharePoint form
 Web Part without requiring SharePoint users to enter Rally credentials.
@@ -275,7 +275,7 @@ Web Part without requiring SharePoint users to enter Rally credentials.
 8.  Click the Save button in the Source Editor. Your report should display in the Web Part.
 
 
-##### Multiple Rally Standard Reports in one SharePoint WebPart
+###### Multiple Rally Standard Reports in one SharePoint WebPart
 
 Adding a second WebPart to a SharePoint page will cause the first WebPart to stop displaying its Rally content.
 Instead, use only one WebPart, but modify your HTML code to put each chart in its own div.
@@ -315,7 +315,7 @@ Example Code:
 </html>
 ````
 
-#### On-Premises Caveats
+##### On-Premises Caveats
 
 LoginKey functionality works out of box for Rally's on-demand (SAAS) editions.
 It still works in On-Premises Rally environment but with some limitations.
