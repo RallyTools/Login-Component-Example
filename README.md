@@ -390,5 +390,4 @@ to make this work the iframe src property should reference loginapi "server":
 
   iframe.src = "https://loginapirally1.rallydev.com/#/9987108532d/custom/1023866638";
   
-There is no equivalent to loginapirally1 in On-Premises scenario, and this method of accessing your Rally data externally,
-regarless of its merits and potential security risk, will not work in On-Premise from the outset.
+There is no equivalent to loginapirally1 in On-Premises scenario, and this method of accessing your Rally data externally, regardless of its merits and potential security risk, will not work in On-Premise from the outset.
