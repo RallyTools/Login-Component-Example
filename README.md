@@ -318,10 +318,64 @@ Example Code:
 ##### On-Premises Caveats
 
 LoginKey functionality works out of box for Rally's on-demand (SAAS) editions.
-It still works in On-Premises Rally environment but with some limitations.
+LoginKey was designed with on-demand Rally in mind, and its functionality with on-premise Rally is limited. 
+
 LoginKey with on-demand Rally has a capability to trick the browser
 to create a separate session cookie to work in a scenario when
 a user loads a Rally app or a report externally in a browser
 (using encoded read-only credentials) alongside with another tab
 in the same browser where an editor user is already logged in to Rally tool.
 This use case should be avoided and is not supported with On-Premises.
+
+This limitation has important implications. Two secreenshots below (from Firebug and Chrome's Dev Tools)
+show where the request comes from in SAAS environment when LoginKey is configured and working correctly:
+from Chrome's Dev Tools
+![](Net tab in Chrome.png)
+from Firefox Firebug:
+![](Net tab in Chrome.png)
+
+The URL is loginapirally1.rallydev.com. There is no equivalent of that in On-Premises environment.
+Theoretically, having a secondary DNS and a wild card SSL certificate would make the scenario work in On-Premise environment.
+However after extensive troubleshooting we came to the conclusion that secondary DNS is not an answer, and expecting the customers
+(1) to setup a secondary DNS,
+(2) to purchase a wild card SSL certificate from a certificate authority, and
+(3) edit EncoderPage.html to replace SAAS-specific code to a code specific to their environment
+if (server[0] === 'rally1') {
+          server[0] = 'loginapirally1'
+is unreasonable and impractical. Those steps are mentioned above only to provide details on the complications that arise in the scenario
+when LoginKey is used On-Premises. Those steps are not recommended, and not supported. An attempt to fake a secondary DNS the way to
+imitate how SAAS does it without the benefit of the wild card SSL certificat will result in certificate errors.
+
+Since there is no separate cookie for LoginKey in On-Premises user's browser, it may require clearing the cache in order to make
+sure that the read-only user's credentials are being used when Rally custom app or a standard report is loaded outside of Rally.
+Another implication is as follows:
+Some users found convenient to use LoginKey in custom apps that access their dashboards and reports via iframe's src property.
+We do not encourage this usage scenario because of a potential security risk.
+The example below is shown only for the purpse of illustrating why it works in SAAS environment but not in On-Premises:
+
+Let's say you are using a LoginKey encoded string in the javascript include as expected:
+<script type="text/javascript" src="https://rally1.rallydev.com/apps/1.24/sdk.js?loginKey=YOUR ENCODING STRING GOES HERE"></script>
+
+and yet the iframe src property is pointing to rally1.rallydev.com:
+ rally.addOnLoad(function() {
+
+                var iframe = document.createElement("iframe");
+
+                iframe.src = "https://rally1.rallydev.com/#/9987108532d/custom/10238666389"; //USE YOUR OWN URL
+
+                iframe.width = 1400;
+
+                iframe.height = 800;
+
+                document.getElementById("ext-gen104").appendChild(iframe);
+
+});
+
+In  this case you will get prompted to login because the encoded credentials in the javascript include will have no effect.
+Since LoginKey works by tricking the browser to create a separate cookie for loginapirally1.rallydev.com
+to make this work the iframe src property should reference loginapi "server":
+
+  iframe.src = "https://loginapirally1.rallydev.com/#/9987108532d/custom/1023866638";
+  
+There is no equivalent to loginapirally1 in On-Premises scenario, and this method of accessing your Rally data externally,
+regarless of its merits and potential security risk, will not work in On-Premise from the outset.
