@@ -8,7 +8,7 @@ or SharePoint, or on a user's desktop—without being prompted to enter login cr
 It is especially useful to create dashboards and information radiators for stakeholders
 that do not have Rally credentials or experience using the Rally product.
 
-The LoginKey essentially provides a way to embed encrypted Rally credentials
+The LoginKey essentially provides a way to embed encoded (not encrypted!) Rally credentials
 for a read-only user into the script tag used to reference the App SDK.
 Because it is possible for a savvy JavaScript programmer to decrypt the string and
 discover the credentials, we require customers wishing to use the LoginKey feature
