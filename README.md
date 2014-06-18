@@ -391,3 +391,29 @@ to make this work the iframe src property should reference loginapi "server":
   iframe.src = "https://loginapirally1.rallydev.com/#/9987108532d/custom/1023866638";
   
 There is no equivalent to loginapirally1 in On-Premises scenario, and this method of accessing your Rally data externally, regardless of its merits and potential security risk, will not work in On-Premise from the outset.
+
+##### Troubleshooting
+
+LoginKey is not specific to Sharepiont, or Confluence or any other 3rd party system. Rally support may not be able to troubleshoot factors specific to deployment of apps in those systems.
+Regardless of the deployment target there are troubleshooting steps that will allow to narrow down the problem.
+
+(I) Make sure that you have created a new read-only user.
+
+1. A read-only user that you create must have no editor rights to any project within the Rally workspace where you want to use the LoginKey functionality. If you have a deeply nested project structure please make sure there are no projects where this user has editor rights.
+
+2. A user that was once a workspace administrator and later demoted to a read-only user will not work with LoginKey: due to an idiosyncrasy in our permissions model, a user like that would not be recognized by LoginKey as a read-only user.
+
+3. Prior to accessing the encoded page to generate the encoded string for a read-only user please log out of Rally if you are currently logged in to Rally in another tab of the same browser with an editor or administrator credentials. There is certainly a redundancy here: you will need to login to Rally with those read-only credentials, and then access the encoder page and will be asked for the same credentials again.
+
+(II) Test your app outside of Rally, directly in the browser, without LoginKey:
+Rally apps can be displayed outside of Rally in a browser  without the LoginKey.
+You will be prompted to login.
+
+Enable the debugging in a browser, e.g. Firebug plugin in Firefox, or Dev Tools in Chrome. Are there errors in the Console?
+
+(III) Test your app outside of Rally, directly in the browser, with LoginKey:
+Assuming the step above was successful it is time to test LoginKey when running a custom app outside of Rally, in a browser. If you ran into problems at this stage enable DevTools in IE and Chrome browsers and check javascript console for errors.
+To further troubleshoot a problem, check if adhoc.js request comes from loginapirally1.rallydev.com, and not rally1.rallydev.com as shown in the screenshots above.
+
+(IV) Test your app in the portal of your choice:
+If the app runs successfully in the browser with LoginKey, test it in SharePoint, Confluence, etc.
