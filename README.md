@@ -33,6 +33,8 @@ to read and accept the following disclaimer before using the LoginKey feature.
  on internal systems that already requires authentication.
 
 3. Warnings:
+     * The LoginKey string is subject to the password rules implemented on the Subscription.
+       It will be invalid if the underlying read-only user account's password has expired or changed. A new LoginKey string will need to be generated on the Encoder page after the password is changed at the specified interval if 'Password Expiration' is enabled on the Subscription.  There is no way to exempt a specific user from the password rules set on the Subscription, they are enforced for all users.
      * For the purpose of the LoginKey user, a Rally workspace administrator account
        which has been demoted to a read-only account will not work as it is still considered
        a NON-read-only account by the LoginKey.
