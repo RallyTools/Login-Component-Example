@@ -8,8 +8,8 @@ or SharePoint, or on a user's desktop—without being prompted to enter login cr
 It is especially useful to create dashboards and information radiators for stakeholders
 that do not have Rally credentials or experience using the Rally product.
 
-The LoginKey essentially provides a way to embed encoded (not encrypted!) Rally credentials
-for a read-only user into the script tag used to reference the App SDK.
+The LoginKey essentially provides a way to embed encoded (WARNING: this is not encryption)
+Rally credentials for a read-only user into the script tag used to reference the App SDK.
 Because it is possible for a savvy JavaScript programmer to decrypt the string and
 discover the credentials, we require customers wishing to use the LoginKey feature
 to read and accept the following disclaimer before using the LoginKey feature.
@@ -21,7 +21,7 @@ to read and accept the following disclaimer before using the LoginKey feature.
  Customers can use the LoginKey feature to show Rally content within
  systems like Sharepoint, Confluence, Wiki's, portals, etc.
 
-2. The LoginKey feature accesses Rally via the encoded (not encrypted)
+2. The LoginKey feature accesses Rally via the encoded (WARNING: this is not encryption)
  username and password of a "read-only" Rally user.
  The encoded username and password are stored in a Javascript file that is delivered to the browser.
 
@@ -46,17 +46,18 @@ to read and accept the following disclaimer before using the LoginKey feature.
      * To utilize a higher version of WSAPI with AppSDK 1.33 one of the following two
        procedures may be followed:
      * Set the API Version in the script include for the sdk.js:
-`<script type="text/javascript" src="/apps/1.33/sdk.js?apiVersion=1.43"></script>`
+```javascript
+            <script type="text/javascript" src="/apps/1.33/sdk.js?apiVersion=1.43"></script>
+```
      * Set the API Version on the rallyDataSource object in your Javascript code:
-
- ````javascript
-var rallyDataSource = new rally.sdk.data.RallyDataSource(
-                    '__WORKSPACE_OID__',
-                    '__PROJECT_OID__',
-                    '__PROJECT_SCOPING_UP__',
-                    '__PROJECT_SCOPING_DOWN__');
-                    rallyDataSource.setApiVersion("1.43");
- ````
+```javascript
+            var rallyDataSource = new rally.sdk.data.RallyDataSource(
+                '__WORKSPACE_OID__',
+                '__PROJECT_OID__',
+                '__PROJECT_SCOPING_UP__',
+                '__PROJECT_SCOPING_DOWN__');
+                rallyDataSource.setApiVersion("1.43");
+```
      * Caution is recommended when adjusting the WSAPI version for AppSDK Rally Catalog Apps - some Catalog Apps are not compatible with newer versions of WSAPI.
 
 ##### Using the App SDK LoginKey Feature
@@ -84,36 +85,36 @@ To get the example working, follow these steps:
 
 1. Copy and paste the example below into a local HTML file called ExternalAppExample.html:
 
- ````html
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-<head>
-    <title>Login Component Example</title>
-    <meta name="Name" content="App Example: LoginKey RallyDataSource" />
-    <meta name="Version" content="2011.04" />
-    <meta name="Vendor" content="Rally Software" />
-    <script type="text/javascript"
-            src="https://rally1.rallydev.com/apps/1.25/sdk.js?loginKey=ENCODED STRING GOES HERE">
-    </script>
-    <script type="text/javascript">
-        function onLoad() {
-            var rallyDataSource = new rally.sdk.data.RallyDataSource(
-                '__WORKSPACE_OID__',
-                '__PROJECT_OID__',
-                '__PROJECT_SCOPING_UP__',
-                '__PROJECT_SCOPING_DOWN__');
-            var config = {type: "hierarchicalrequirement", columnKeys:["FormattedID", "Name"]};
-            var table = new rally.sdk.ui.Table(config, rallyDataSource);
-            table.display("tableDiv");
-        }
-        rally.addOnLoad(onLoad);
-    </script>
-</head>
-<body>
-    <div id="tableDiv" style="float:left;width:400px"></div>
-</body>
-</html>
-````
+```html
+		<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+		<html>
+		<head>
+		    <title>Login Component Example</title>
+		    <meta name="Name" content="App Example: LoginKey RallyDataSource" />
+		    <meta name="Version" content="2011.04" />
+		    <meta name="Vendor" content="Rally Software" />
+		    <script type="text/javascript"
+		            src="https://rally1.rallydev.com/apps/1.25/sdk.js?loginKey=ENCODED STRING GOES HERE">
+		    </script>
+		    <script type="text/javascript">
+		        function onLoad() {
+		            var rallyDataSource = new rally.sdk.data.RallyDataSource(
+		                '__WORKSPACE_OID__',
+		                '__PROJECT_OID__',
+		                '__PROJECT_SCOPING_UP__',
+		                '__PROJECT_SCOPING_DOWN__');
+		            var config = {type: "hierarchicalrequirement", columnKeys:["FormattedID", "Name"]};
+		            var table = new rally.sdk.ui.Table(config, rallyDataSource);
+		            table.display("tableDiv");
+		        }
+		        rally.addOnLoad(onLoad);
+		    </script>
+		</head>
+		<body>
+		    <div id="tableDiv" style="float:left;width:400px"></div>
+		</body>
+		</html>
+```
 
 2. Modify the meta tags to reflect your own name, version, and vendor (your company name) for your example app.
 
@@ -152,9 +153,9 @@ To get the example working, follow these steps:
  (Note: Line breaks may appear in the following text,
  but should not be added when you paste the string into the script tag).
 
- ````html
-<script type="text/javascript" src="/apps/1.25/sdk.js?debug=true&loginKey=acda07bd5e53c99ae953f5374cf6e9c4cd996a7ad133a5c2c8cc406caf1d9beb|f9f08a4699e83a27ecfbc462c3b51314|e5217f5acc26020b9a45f0009f0b028757b3a2ecfd7a72ed7a6ab5fb2f47df0ab64024ef268bd302a4117e0f93ed9bfb|71,50,65,97,121,3,17,51,117,7,150,38,80,97,148,71"></script>
-````
+```javascript
+        <script type="text/javascript" src="/apps/1.25/sdk.js?debug=true&loginKey=acda07bd5e53c99ae953f5374cf6e9c4cd996a7ad133a5c2c8cc406caf1d9beb|f9f08a4699e83a27ecfbc462c3b51314|e5217f5acc26020b9a45f0009f0b028757b3a2ecfd7a72ed7a6ab5fb2f47df0ab64024ef268bd302a4117e0f93ed9bfb|71,50,65,97,121,3,17,51,117,7,150,38,80,97,148,71"></script>
+```
 
 7. NOTE: The encoder page requires a "viewer-only" user to generate the encoded key string.
  The key is visible to anyone using the browser in which the external app is displayed
@@ -183,25 +184,25 @@ in a Confluence page without requiring Confluence users to enter Rally credentia
 
 2.  Copy and paste the following example code (app) into the file:
 
- ````html
-    <title>Login Component Example</title>
-    <meta name="Name" content="App Example: Confluence Standard Report" />
-    <meta name="Version" content="2011.04" />
-    <meta name="Vendor" content="Rally Software" />
-    <script type="text/javascript"
-            src="https://rally1.rallydev.com/apps/1.25/sdk.js?loginKey=ENCODED STRING GOES HERE">
-    </script>
-    <script type="text/javascript">
-        function onLoad() {
-            rally.sdk.ui.AppHeader.destroy();
-            var reportConfig = {report: rally.sdk.ui.StandardReport.IterationBurndown, width : 400, height: 300};
-            var report = new rally.sdk.ui.StandardReport(reportConfig);
-            report.display("reportDiv");
-        }
-        rally.addOnLoad(onLoad);
-    </script>
-    <div id="reportDiv" style="float:left; width: 400px; margin-left:20px"></div>
-````
+```html
+	    <title>Login Component Example</title>
+	    <meta name="Name" content="App Example: Confluence Standard Report" />
+	    <meta name="Version" content="2011.04" />
+	    <meta name="Vendor" content="Rally Software" />
+	    <script type="text/javascript"
+	            src="https://rally1.rallydev.com/apps/1.25/sdk.js?loginKey=ENCODED STRING GOES HERE">
+	    </script>
+	    <script type="text/javascript">
+	        function onLoad() {
+	            rally.sdk.ui.AppHeader.destroy();
+	            var reportConfig = {report: rally.sdk.ui.StandardReport.IterationBurndown, width : 400, height: 300};
+	            var report = new rally.sdk.ui.StandardReport(reportConfig);
+	            report.display("reportDiv");
+	        }
+	        rally.addOnLoad(onLoad);
+	    </script>
+	    <div id="reportDiv" style="float:left; width: 400px; margin-left:20px"></div>
+```
 
 3. Replace "ENCODED STRING GOES HERE" text with the encrypted login key produced by the
  [Encoder Page](https://rally1.rallydev.com/apps/html/EncoderPage.html)
@@ -233,32 +234,32 @@ Web Part without requiring SharePoint users to enter Rally credentials.
 
 1.  Copy and paste the example code below into a text editor to begin creating your own page:
 
- ````html
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-<head>
-    <title>Login Component Example</title>
-    <meta name="Name" content="App Example: SharePoint Standard Report" />
-    <meta name="Version" content="2011.04" />
-    <meta name="Vendor" content="Rally Software" />
-    <script type="text/javascript"
-            src="https://rally1.rallydev.com/apps/1.25/sdk.js?loginKey=ENCODED STRING GOES HERE">
-    </script>
-    <script type="text/javascript">
-        function onLoad() {
-            rally.sdk.ui.AppHeader.destroy();
-            var reportConfig = {report: rally.sdk.ui.StandardReport.IterationBurndown, width : 400, height: 300};
-            var report = new rally.sdk.ui.StandardReport(reportConfig);
-            report.display("reportDiv");
-        }
-        rally.addOnLoad(onLoad);
-    </script>
-</head>
-<body>
-    <div id="reportDiv" style="float:left; width: 400px; margin-left:20px"></div>
-</body>
-</html>
-````
+```html
+		<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+		<html>
+		<head>
+		    <title>Login Component Example</title>
+		    <meta name="Name" content="App Example: SharePoint Standard Report" />
+		    <meta name="Version" content="2011.04" />
+		    <meta name="Vendor" content="Rally Software" />
+		    <script type="text/javascript"
+		            src="https://rally1.rallydev.com/apps/1.25/sdk.js?loginKey=ENCODED STRING GOES HERE">
+		    </script>
+		    <script type="text/javascript">
+		        function onLoad() {
+		            rally.sdk.ui.AppHeader.destroy();
+		            var reportConfig = {report: rally.sdk.ui.StandardReport.IterationBurndown, width : 400, height: 300};
+		            var report = new rally.sdk.ui.StandardReport(reportConfig);
+		            report.display("reportDiv");
+		        }
+		        rally.addOnLoad(onLoad);
+		    </script>
+		</head>
+		<body>
+		    <div id="reportDiv" style="float:left; width: 400px; margin-left:20px"></div>
+		</body>
+		</html>
+```
 
 2.  Replace "ENCODED STRING GOES HERE" text with the encrypted login key produced by the
  [Encoder Page](https://rally1.rallydev.com/apps/html/EncoderPage.html).
@@ -286,7 +287,7 @@ You will need to use a separate config object for each
 
 Example Code:
 
-````html
+```html
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
@@ -315,7 +316,7 @@ Example Code:
     <div id="reportDiv2" style="float:left; width: 400px; margin-left:20px"></div>
 </body>
 </html>
-````
+```
 
 ##### On-Premises Caveats
 
@@ -340,18 +341,20 @@ from Firefox Firebug:
 
 ![](Net tab in Chrome.png)
 
-The URL is loginapirally1.rallydev.com. There is no equivalent of that in On-Premises environment.
-Theoretically, having a secondary DNS and a wild card SSL certificate would make the scenario work in On-Premise environment.
-However after extensive troubleshooting we came to the conclusion that secondary DNS is not an answer, and expecting the customers
+The URL is loginapirally1.rallydev.com. There is no equivalent of that in
+On-Premises environment.  Theoretically, having a secondary DNS and a wild card
+SSL certificate would make the scenario work in On-Premise environment.
+However, after extensive troubleshooting, we came to the conclusion
+that secondary DNS is not an answer, and expecting the customers
 
-(1) to setup a secondary DNS,
-(2) to purchase a wild card SSL certificate from a certificate authority, and
-(3) edit EncoderPage.html to replace SAAS-specific code to a code specific to their environment
+1. to setup a secondary DNS,
+2. to purchase a wild card SSL certificate from a certificate authority, and
+3. edit EncoderPage.html to replace SAAS-specific code to a code specific to their environment is unreasonable and impractical.
 
-if (server[0] === 'rally1') {
-          server[0] = 'loginapirally1'
-          
-is unreasonable and impractical.
+```javascript
+        if (server[0] === 'rally1') {
+                server[0] = 'loginapirally1'
+```
 
 These three steps are mentioned above only to provide details on the complications that arise in the scenario
 when LoginKey is used On-Premises.
@@ -372,24 +375,24 @@ Let's say you are using a LoginKey encoded string in the javascript include as e
 <script type="text/javascript" src="https://rally1.rallydev.com/apps/1.24/sdk.js?loginKey=YOUR ENCODING STRING GOES HERE"></script>
 
 and yet the iframe src property is pointing to rally1.rallydev.com:
- rally.addOnLoad(function() {
+```javascript
+    rally.addOnLoad(function() {
+        var iframe = document.createElement("iframe");
+        iframe.src = "https://rally1.rallydev.com/#/9987108532d/custom/10238666389"; //USE YOUR OWN URL
+        iframe.width = 1400;
+        iframe.height = 800;
+        document.getElementById("ext-gen104").appendChild(iframe);
+    });
+```
 
-                var iframe = document.createElement("iframe");
-
-                iframe.src = "https://rally1.rallydev.com/#/9987108532d/custom/10238666389"; //USE YOUR OWN URL
-
-                iframe.width = 1400;
-
-                iframe.height = 800;
-
-                document.getElementById("ext-gen104").appendChild(iframe);
-
-});
-
-In  this case you will get prompted to login because the encoded credentials in the javascript include will have no effect.
-Since LoginKey works by tricking the browser to create a separate cookie for loginapirally1.rallydev.com
-to make this work the iframe src property should reference loginapi "server":
-
+In this case you will get prompted to login because the encoded credentials in
+the javascript included will have no effect.  Since LoginKey works by tricking
+the browser to create a separate cookie for loginapirally1.rallydev.com to make
+this work the iframe src property should reference loginapi "server":
+```javascript
   iframe.src = "https://loginapirally1.rallydev.com/#/9987108532d/custom/1023866638";
-  
-There is no equivalent to loginapirally1 in On-Premises scenario, and this method of accessing your Rally data externally, regardless of its merits and potential security risk, will not work in On-Premise from the outset.
+```
+There is no equivalent to loginapirally1 in On-Premises scenario,
+and this method of accessing your Rally data externally,
+regardless of its merits and potential security risk,
+will not work in On-Premise from the outset.
