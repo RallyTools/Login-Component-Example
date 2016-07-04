@@ -171,6 +171,11 @@ Similar to the steps above, you can also display shared Rally apps.
 This means the App must be "shared" to run outside of Rally.
 An unshared app will result in a 404 Page Not Found error.
 
+NOTE: Please check cookie handling policy in your browser(s).
+If there is a policy in place that blocks third party cookies, add an exception for Rally. For example, a Chrome user reported receiving  "Cannot read property 'LegacyBootstrapper' of undefined" error, whch was resolved by adding Rally to the exceptoins list.
+
+I can add an exception for rally
+
 ###### Confluence access to Standard Reports
 
 This example shows how to display Rally
